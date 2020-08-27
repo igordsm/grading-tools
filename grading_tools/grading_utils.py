@@ -3,7 +3,6 @@ import argparse
 import filecmp
 import re
 import os
-import numpy as np
 import subprocess
 import psutil
 import inspect
