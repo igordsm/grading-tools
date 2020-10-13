@@ -11,8 +11,8 @@ class CheckOutputMixin:
 class CheckStderrMixin:
     def test_program_stderr(self, test, stdout, stderr):
         if test.ignore_whitespace:
-            tokens_expected = test.output.strip().split()
-            tokens_test = stdout.strip().split()
+            tokens_expected = test.stderr.strip().split()
+            tokens_test = stderr.strip().split()
             return tokens_expected == tokens_test
         else:
             return test.stderr.strip() == stderr.strip()
