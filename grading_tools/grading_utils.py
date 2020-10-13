@@ -55,7 +55,8 @@ class ProgramTest:
                     print(name, test_result)
                     pass_all = test_result and pass_all
 
-        print('====================\nValidated:', pass_all)
+        #print('====================\nValidated:', pass_all)
+        return pass_all
         
     def timeout(self, test):
         print(f'Timeout exceeded: {test.time_limit}s')
@@ -77,20 +78,4 @@ class RepeaterTest(ProgramTest):
     def __init__(self, program_cmd, test, num_repetitions):
         tests = {f'Execution {i}': test for i in range(num_repetitions)}
         super().__init__(program_cmd, tests)
-
-
-
-class PerformanceTest(ProgramTest):
-    def before_run(self, test):
-        psutil.cpu_percent(percpu=True)
-
-    def after_run(self, test, stdout, stderr):
-        self.cpu_percent = psutil.cpu_percent(percpu=True)
-    
-    def test_multi_core_performance(self, test, stdout, stderr):
-        total_cpu = len(self.cpu_percent)
-        multi_core_performance = (sum(self.cpu_percent) / total_cpu) > 50
-        return multi_core_performance
-
-
 

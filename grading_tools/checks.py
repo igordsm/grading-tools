@@ -16,3 +16,18 @@ class CheckStderrMixin:
             return tokens_expected == tokens_test
         else:
             return test.stderr.strip() == stderr.strip()
+
+
+class CheckMultiCorePerformance:
+    def before_run(self, test):
+        psutil.cpu_percent(percpu=True)
+
+    def after_run(self, test, stdout, stderr):
+        self.cpu_percent = psutil.cpu_percent(percpu=True)
+    
+    def test_multi_core_performance(self, test, stdout, stderr):
+        total_cpu = len(self.cpu_percent)
+        multi_core_performance = (sum(self.cpu_percent) / total_cpu) > 50
+        return multi_core_performance
+
+
