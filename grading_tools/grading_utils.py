@@ -37,12 +37,12 @@ class ProgramTest:
 
             try:
                 for method in methods_before:
-                    method()
+                    method[1]()
 
                 stdout, stderr = self.run_program(test)
                 
                 for method in methods_after:
-                    method()
+                    method[1]()
             except subprocess.TimeoutExpired:
                 self.timeout(test)
                 pass_all = False

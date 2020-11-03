@@ -1,3 +1,5 @@
+import psutil
+
 class CheckOutputMixin:
     def test_program_output(self, test, stdout, stderr):
         if test.ignore_whitespace:
@@ -19,10 +21,10 @@ class CheckStderrMixin:
 
 
 class CheckMultiCorePerformance:
-    def before_run(self, test):
+    def before_run(self):
         psutil.cpu_percent(percpu=True)
 
-    def after_run(self, test, stdout, stderr):
+    def after_run(self):
         self.cpu_percent = psutil.cpu_percent(percpu=True)
     
     def test_multi_core_performance(self, test, stdout, stderr):
